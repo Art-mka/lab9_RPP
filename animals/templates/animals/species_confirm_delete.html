@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 40px;">
+    <h2 style="color: black;">Удалить вид "{{ species.name }}"?</h2>
+    <p style="color: red;">Внимание! Все породы этого вида тоже удалятся!</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-red">Удалить</button>
+        <a href="{% url 'species_list' %}" class="btn">Отмена</a>
+    </form>
+</div>
+{% endblock %}

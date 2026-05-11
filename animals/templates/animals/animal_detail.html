@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ animal.name }}</h2>
+
+<div style="background: #f5f5f5; padding: 20px; border-radius: 12px;">
+    <p><strong>Кличка:</strong> {{ animal.name }}</p>
+    <p><strong>Порода:</strong> {{ animal.breed.name }}</p>
+    <p><strong>Вид:</strong> {{ animal.breed.species.name }}</p>
+    <p><strong>Возраст:</strong> {{ animal.age }} месяцев</p>
+    <p><strong>Пол:</strong> {{ animal.get_gender_display }}</p>
+    <p><strong>Статус:</strong>
+        {% if animal.status == 'available' %}<span class="avail">Без владельца</span>
+        {% elif animal.status == 'reserved' %}<span class="reserved">Забронирован</span>
+        {% else %}<span class="adopted">Отдан</span>{% endif %}
+    </p>
+    <p><strong>Владелец:</strong> {{ animal.owner|default:"Нет" }}</p>
+    <p><strong>Поступил:</strong> {{ animal.created_at|date:"d.m.Y" }}</p>
+</div>
+
+<br>
+<a href="
+    {% if user.profile.role == 'receiver' %}
+        {% url 'animal_list' %}
+    {% else %}
+        {% url 'animal_list_for_giver' %}
+    {% endif %}
+" class="btn">Назад</a>
+{% endblock %}

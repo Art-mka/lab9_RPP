@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Животные для отдачи</h2>
+
+<table>
+    <thead>
+        <tr><th>Кличка</th><th>Порода</th><th>Возраст</th><th>Пол</th><th>Статус</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for a in animals %}
+        <tr>
+            <td>{{ a.name }}</td>
+            <td>{{ a.breed.name }}</td>
+            <td>{{ a.age }} мес</td>
+            <td>{{ a.get_gender_display }}</td>
+            <td>{% if a.status == 'available' %}<span class="avail">Без владельца</span>{% else %}<span class="reserved">Забронирован</span>{% endif %}</td>
+            <td>
+                <a href="{% url 'animal_detail' a.pk %}" class="btn btn-blue" style="padding: 4px 8px;">Просмотр</a>
+                <a href="{% url 'animal_adopt' a.pk %}" class="btn" style="padding: 4px 8px;">Отдать</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" style="text-align: center;">Нет доступных или забронированных животных</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

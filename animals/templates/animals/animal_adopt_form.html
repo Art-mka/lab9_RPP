@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Отдать {{ animal.name }}</h2>
+<div style="background: #e8f5e9; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+    <p><strong>Порода:</strong> {{ animal.breed.name }} | <strong>Возраст:</strong> {{ animal.age }} мес | <strong>Пол:</strong> {{ animal.get_gender_display }}</p>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <label>Новый владелец:</label>
+    {{ form.owner }}
+    <label>Статус:</label>
+    {{ form.status }}
+    <button type="submit" class="btn">Подтвердить</button>
+    <a href="{% url 'animal_list_for_giver' %}" class="btn btn-red">Отмена</a>
+</form>
+{% endblock %}

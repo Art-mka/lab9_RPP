@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 40px;">
+    <h2 style="color: black;">Удалить {{ animal.name }}?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-red">Да, удалить</button>
+        <a href="{% url 'animal_list' %}" class="btn">Отмена</a>
+    </form>
+</div>
+{% endblock %}

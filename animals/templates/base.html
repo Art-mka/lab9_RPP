@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Приют животных</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f0f2f5;
+        }
+        /* Шапка */
+        .header {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .header a, .header button {
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .header a:hover, .header button:hover {
+            text-decoration: underline;
+        }
+        /* Контейнер */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            background: #2e7d32;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-red { background: #d32f2f; }
+        .btn-orange { background: #f57c00; }
+        .btn-blue { background: #1976d2; }
+        /* Таблица */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th {
+            background: #2e7d32;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background: #f5f5f5;
+        }
+        /* Формы */
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+        label {
+            font-weight: bold;
+        }
+        /* Статусы */
+        .avail { color: #2e7d32; font-weight: bold; }
+        .reserved { color: #f57c00; font-weight: bold; }
+        .adopted { color: #757575; }
+        /* Роли */
+        .badge {
+            background: #1976d2;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        .badge-giver { background: #f57c00; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <a href="/">Главная</a>
+            {% if user.is_authenticated and user.profile.role == 'receiver' %}
+                <a href="{% url 'breed_list' %}">Породы</a>
+                <a href="{% url 'species_list' %}">Виды</a>
+                <a href="{% url 'owner_list' %}">Владельцы</a>
+            {% endif %}
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                {{ user.username }}
+                <span class="badge {% if user.profile.role == 'giver' %}badge-giver{% endif %}">
+                    {{ user.profile.get_role_display }}
+                </span>
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button>Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Все животные</h2>
+<a href="{% url 'animal_create' %}" class="btn">Добавить</a>
+
+<table>
+    <thead>
+        <tr><th>ID</th><th>Кличка</th><th>Порода</th><th>Возраст</th><th>Пол</th><th>Статус</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for a in animals %}
+        <tr>
+            <td>{{ a.id }}</td>
+            <td>{{ a.name }}</td>
+            <td>{{ a.breed.name }}</td>
+            <td>{{ a.age }} мес</td>
+            <td>{{ a.get_gender_display }}</td>
+            <td>{% if a.status == 'available' %}<span class="avail">Без владельца</span>{% elif a.status == 'reserved' %}<span class="reserved">Забронирован</span>{% else %}<span class="adopted">Отдан</span>{% endif %}</td>
+            <td>
+                <a href="{% url 'animal_detail' a.pk %}" class="btn btn-blue" style="padding: 4px 8px;">Просмотр</a>
+                <a href="{% url 'animal_update' a.pk %}" class="btn btn-orange" style="padding: 4px 8px;">Редактировать</a>
+                <a href="{% url 'animal_delete' a.pk %}" class="btn btn-red" style="padding: 4px 8px;">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" style="text-align: center;">Нет животных</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

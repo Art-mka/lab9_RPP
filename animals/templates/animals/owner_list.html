@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Владельцы</h2>
+<a href="{% url 'owner_create' %}" class="btn">Добавить</a>
+
+<table>
+    <thead>
+        <tr><th>ID</th><th>Фамилия</th><th>Имя</th><th>Телефон</th><th></th></tr>
+    </thead>
+    <tbody>
+        {% for o in owners %}
+        <tr>
+            <td>{{ o.id }}</td>
+            <td>{{ o.last_name }}</td>
+            <td>{{ o.first_name }}</td>
+            <td>{{ o.phone }}</td>
+            <td>
+                <a href="{% url 'owner_update' o.pk %}" class="btn btn-orange" style="padding: 4px 8px;">Редактировать</a>
+                <a href="{% url 'owner_delete' o.pk %}" class="btn btn-red" style="padding: 4px 8px;">Удалить</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5" style="text-align: center;">Нет владельцев</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

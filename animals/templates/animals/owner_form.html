@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}Редактировать владельца{% else %}Добавить владельца{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        <label>{{ field.label }}</label>
+        {{ field }}
+    {% endfor %}
+    <button type="submit" class="btn">Сохранить</button>
+    <a href="{% url 'owner_list' %}" class="btn btn-red">Отмена</a>
+</form>
+{% endblock %}
