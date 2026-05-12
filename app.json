@@ -1,0 +1,14 @@
+{
+  "name": "Animal Shelter",
+  "description": "Приют для животных",
+  "repository": "https://github.com/Art-mka/lab9_RPP",
+  "env": {
+    "DEBUG": {
+      "value": "False"
+    },
+    "SECRET_KEY": {
+      "generator": "secret"
+    }
+  },
+  "addons": ["heroku-postgresql"]
+}
